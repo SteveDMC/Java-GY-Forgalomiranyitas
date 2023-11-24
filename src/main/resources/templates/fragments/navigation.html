@@ -17,8 +17,9 @@
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active" >
         <span sec:authorize="isAnonymous()" style="display: flex;">
-          <a class="nav-link" th:href="@{/login}">Login </a>
-          <a class="nav-link" th:href="@{/jelszoteszt}">Jelszo teszt</a>
+          <a class="nav-link" th:href="@{/login}">Login</a>
+          <a class="nav-link" th:href="@{/regisztral}">Regisztráció</a>
+          <a class="nav-link" th:href="@{/jelszoteszt}">Jelszó generálás</a>
         </span>
       </li>
       <li class="nav-item active">

@@ -17,15 +17,19 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true,proxyTargetClass = true)
 public class WebSecurityConfig {
-    @Autowired
-    private UserDetailsService customUserDetailService;
+    //@Autowired
+    private final UserDetailsService customUserDetailService;
+
+    public WebSecurityConfig(final UserDetailsService customUserDetailService) {
+        this.customUserDetailService = customUserDetailService;
+    }
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailService).passwordEncoder(new BCryptPasswordEncoder());
     }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(auth -> auth.requestMatchers("/resources/**","/","/jelszoteszt").permitAll()
+        http.authorizeHttpRequests(auth -> auth.requestMatchers("/resources/**","/","/regisztral","/regisztral_feldolgoz","/jelszoteszt").permitAll()
                 .requestMatchers("/admin/**").hasAuthority("ROLE_Admin")
                 .anyRequest().authenticated())
                 .formLogin(formLogin ->formLogin.defaultSuccessUrl("/home").permitAll())

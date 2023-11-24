@@ -4,12 +4,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.lang.reflect.Array;
 
 @Controller
 public class HomeController {
+
     @GetMapping("/")
     public String home() {
         return "index";
@@ -22,6 +23,32 @@ public class HomeController {
     public String admin() {
         return "admin";
     }
+    @GetMapping("/regisztral")
+    public String greetingForm(Model model){
+        model.addAttribute("reg", new User());
+        return "regisztral";
+    }
+    //@Autowired
+    private final UserRepository userRepo;
+
+    public HomeController(final UserRepository userRepo) {
+        this.userRepo = userRepo;
+    }
+    @PostMapping("/regisztral_feldolgoz")
+    public String Regisztracio(@ModelAttribute User user, Model model) {
+        for(User felhasznalo2:userRepo.findAll())
+            if(felhasznalo2.getBejelentkezes().equals(user.getBejelentkezes())){
+                model.addAttribute("uzenet","A regisztrációs név már foglalt!");
+                return "reghiba";
+            }
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        user.setJelszo(passwordEncoder.encode(user.getJelszo()));
+        user.setJogosultsag("ROLE_Vendeg");
+        userRepo.save(user);
+        model.addAttribute("id",user.getId());
+        return "regjo";
+    }
+
     @GetMapping("/jelszoteszt")
     @ResponseBody
     public String[] jelszoteszt() {

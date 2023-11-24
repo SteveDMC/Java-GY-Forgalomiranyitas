@@ -1,11 +1,17 @@
 package forgalomiranyitas.foprogram;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
+
 @Entity
-@Table(name = "felhasznalok")
+@Table(name="felhasznalok")
 public class User {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String csaladi_nev;
     private String utonev;
@@ -13,7 +19,17 @@ public class User {
     private String email;
     private String jelszo;
     private String jogosultsag;
-
+/*
+    public User() {}
+    public User(Integer id, String csaladi_nev, String utonev, String bejelentkezes, String email, String jelszo, String jogosultsag) {
+        this.id = id;
+        this.csaladi_nev = csaladi_nev;
+        this.utonev = utonev;
+        this.bejelentkezes = bejelentkezes;
+        this.email = email;
+        this.jelszo = jelszo;
+        this.jogosultsag = jogosultsag;
+    }*/
     public Integer getId() {
         return id;
     }
@@ -55,8 +71,5 @@ public class User {
     }
     public void setJogosultsag(String jogosultsag) {
         this.jogosultsag = jogosultsag;
-    }
-    public String getLongName() {
-        return getCsaladi_nev()+" "+getUtonev();
     }
 }
