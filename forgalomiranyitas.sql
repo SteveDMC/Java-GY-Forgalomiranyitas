@@ -20,7 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Adatbázis: `forgalomiranyitas`
 --
-
+CREATE DATABASE IF NOT EXISTS `forgalomiranyitas` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `forgalomiranyitas`;
 -- --------------------------------------------------------
 
 --
