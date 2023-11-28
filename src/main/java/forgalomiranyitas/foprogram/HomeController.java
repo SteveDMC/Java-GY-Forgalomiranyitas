@@ -39,7 +39,7 @@ public class HomeController {
     public String Regisztracio(@ModelAttribute User user, Model model) {
         for(User felhasznalo2:userRepo.findAll())
             if(felhasznalo2.getBejelentkezes().equals(user.getBejelentkezes())){
-                model.addAttribute("uzenet","A regisztrációs név már foglalt!");
+                model.addAttribute("uzenet","A regisztrációs név már foglalt ("+user.getBejelentkezes()+")!");
                 return "reghiba";
             }
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -47,6 +47,7 @@ public class HomeController {
         user.setJogosultsag("ROLE_Vendeg");
         userRepo.save(user);
         model.addAttribute("id",user.getId());
+        model.addAttribute("bejelentkezes",user.getBejelentkezes());
         return "regjo";
     }
 
