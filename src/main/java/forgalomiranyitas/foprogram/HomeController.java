@@ -1,5 +1,7 @@
 package forgalomiranyitas.foprogram;
 
+import forgalomiranyitas.foprogram.model.KorlatozasRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +62,12 @@ public class HomeController {
             pass[i] = "jelszó" + (i + 1) + ": " + bCryptPasswordEncoder.encode(pass[i]);
         }
         return pass;
+    }
+
+    @Autowired private KorlatozasRepo korlatozasRepo;
+    @GetMapping("/korlatozasok")
+    public String korlatozasok(Model model){
+        model.addAttribute("korlatozasok", korlatozasRepo.findAll());
+        return "korlatozasok";
     }
 }

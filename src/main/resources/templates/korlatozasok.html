@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Korlátozások</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div th:replace="~{fragments/navigation :: navigation}"></div>
+
+    <main role="main">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Útszám</th>
+                            <th scope="col">Kezdet (km)</th>
+                            <th scope="col">Vég (km)</th>
+                            <th scope="col">Település</th>
+                            <th scope="col">Mettől</th>
+                            <th scope="col">Meddig</th>
+                            <th scope="col">Megnevezés</th>
+                            <th scope="col">Mérték</th>
+                            <th scope="col">Sebességkorlátozás</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="k: ${korlatozasok}">
+                            <th scope="row" th:text="${k.id}"></th>
+                            <td th:text="${k.utszam}"></td>
+                            <td th:text="${k.kezdet}"></td>
+                            <td th:text="${k.veg}"></td>
+                            <td th:text="${k.telepules}"></td>
+                            <td th:text="${k.mettol}"></td>
+                            <td th:text="${k.meddig}"></td>
+                            <td th:text="${k.megnevezes.nev}"></td>
+                            <td th:text="${k.mertek.nev}"></td>
+                            <td th:text="${k.sebesseg}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+    </body>
+</html>

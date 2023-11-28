@@ -29,7 +29,7 @@ public class WebSecurityConfig {
     }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(auth -> auth.requestMatchers("/resources/**","/","/regisztral","/regisztral_feldolgoz","/jelszoteszt").permitAll()
+        http.authorizeHttpRequests(auth -> auth.requestMatchers("/resources/**","/","/regisztral","/regisztral_feldolgoz","/jelszoteszt", "/korlatozasok").permitAll()
                 .requestMatchers("/admin/**").hasAuthority("ROLE_Admin")
                 .anyRequest().authenticated())
                 .formLogin(formLogin ->formLogin.defaultSuccessUrl("/home").permitAll())
