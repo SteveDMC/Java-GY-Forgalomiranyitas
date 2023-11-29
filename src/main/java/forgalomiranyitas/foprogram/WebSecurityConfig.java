@@ -29,13 +29,18 @@ public class WebSecurityConfig {
     }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(auth -> auth.requestMatchers("/resources/**","/","/regisztral","/regisztral_feldolgoz","/jelszoteszt", "/korlatozasok").permitAll()
+        http.authorizeHttpRequests(auth -> auth.requestMatchers(
+                    "/resources/**","/","/regisztral","/regisztral_feldolgoz",
+                    "/jelszoteszt", "/korlatozasok", "/uzenetkuldes", "/uzenet-bekuldve",
+                    "/api/**"
+                ).permitAll()
                 .requestMatchers("/admin/**").hasAuthority("ROLE_Admin")
                 .anyRequest().authenticated())
                 .formLogin(formLogin ->formLogin.defaultSuccessUrl("/home").permitAll())
                 .logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .logoutSuccessUrl("/").permitAll())
                 .exceptionHandling(Customizer.withDefaults());
+        http.csrf().disable();
         return http.build();
     }
 }
