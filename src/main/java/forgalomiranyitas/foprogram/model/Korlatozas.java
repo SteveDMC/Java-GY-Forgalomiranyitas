@@ -2,6 +2,7 @@ package forgalomiranyitas.foprogram.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -20,9 +21,9 @@ public class Korlatozas {
     @Column(name = "telepules")
     private String telepules;
     @Column(name = "mettol")
-    private Date mettol;
+    private LocalDate mettol;
     @Column(name = "meddig")
-    private Date meddig;
+    private LocalDate meddig;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "megnevid")
     private Megnevezes megnevezes;
@@ -35,7 +36,7 @@ public class Korlatozas {
     public Korlatozas() {
     }
 
-    public Korlatozas(int utszam, double kezdet, double veg, String telepules, Date mettol, Date meddig, Megnevezes megnevezes, Mertek mertek, int sebesseg) {
+    public Korlatozas(int utszam, double kezdet, double veg, String telepules, LocalDate mettol, LocalDate meddig, Megnevezes megnevezes, Mertek mertek, int sebesseg) {
         this.utszam = utszam;
         this.kezdet = kezdet;
         this.veg = veg;
@@ -87,19 +88,19 @@ public class Korlatozas {
         this.telepules = telepules;
     }
 
-    public Date getMettol() {
+    public LocalDate getMettol() {
         return mettol;
     }
 
-    public void setMettol(Date mettol) {
+    public void setMettol(LocalDate mettol) {
         this.mettol = mettol;
     }
 
-    public Date getMeddig() {
+    public LocalDate getMeddig() {
         return meddig;
     }
 
-    public void setMeddig(Date meddig) {
+    public void setMeddig(LocalDate meddig) {
         this.meddig = meddig;
     }
 

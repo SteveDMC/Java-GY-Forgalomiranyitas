@@ -1,5 +1,6 @@
 package forgalomiranyitas.foprogram.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public class Megnevezes {
     @Column(name="nev")
     private String nev;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "megnevezes", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     public List<Korlatozas> korlatozasok;
 
