@@ -1,15 +1,22 @@
 package forgalomiranyitas.foprogram;
 
 import forgalomiranyitas.foprogram.model.KorlatozasRepo;
+import forgalomiranyitas.foprogram.model.Uzenet;
+import forgalomiranyitas.foprogram.model.UzenetRepo;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.security.Principal;
+import java.time.LocalDateTime;
 
 @Controller
 public class HomeController {
@@ -23,7 +30,8 @@ public class HomeController {
         return "user";
     }
     @GetMapping("/admin/home")
-    public String admin() {
+    public String admin(Model model) {
+        model.addAttribute("uzenetek", uzenetRepo.findAllWithCustomOrderBy(Sort.by(Sort.Direction.DESC, "datum")));
         return "admin";
     }
     @GetMapping("/regisztral")
@@ -69,5 +77,23 @@ public class HomeController {
     public String korlatozasok(Model model){
         model.addAttribute("korlatozasok", korlatozasRepo.findAll());
         return "korlatozasok";
+    }
+
+    @GetMapping("/uzenetkuldes")
+    public String uzenetkuldes(Model model){
+        model.addAttribute("uzenet", new Uzenet());
+        return "uzenetkuldes";
+    }
+
+    @Autowired private UzenetRepo uzenetRepo;
+    @PostMapping("/uzenetkuldes")
+    public String uzenetkuldes(@Valid @ModelAttribute Uzenet uzenet, BindingResult bindingResult, Model model, Principal principal) {
+        if (bindingResult.hasErrors())
+            return "uzenetkuldes";
+        String nev = principal != null ? principal.getName() : "Vendég";
+        uzenet.setNev(nev);
+        uzenet.setDatum(LocalDateTime.now());
+        uzenetRepo.save(uzenet);
+        return "uzenet-bekuldve";
     }
 }
