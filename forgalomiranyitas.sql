@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2023. Nov 24. 05:20
+-- Létrehozás ideje: 2023. Nov 30. 22:45
 -- Kiszolgáló verziója: 10.4.28-MariaDB
 -- PHP verzió: 8.1.17
 
@@ -20,8 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Adatbázis: `forgalomiranyitas`
 --
-CREATE DATABASE IF NOT EXISTS `forgalomiranyitas` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `forgalomiranyitas`;
+
 -- --------------------------------------------------------
 
 --
@@ -43,7 +42,7 @@ CREATE TABLE `felhasznalok` (
 --
 
 INSERT INTO `felhasznalok` (`id`, `csaladi_nev`, `utonev`, `bejelentkezes`, `email`, `jelszo`, `jogosultsag`) VALUES
-(1, 'Fodor', 'Kornél', 'Admin', 'fodor.kornel@vinaora.com', '$2a$10$QEaf3I.eLiZC4F4pDnqmC.sTysFlJ59wgROmw3ATxceFs/wgg0LvK', 'ROLE_Admin'),
+(1, 'Fodor', 'Kornél', 'Admin', 'fodor.kornel@vinaora.com', '$2a$10$t0OPDR2NKd4DxbHaUaRIFuLpFbbicVwd3sWa6Tu.cYMZtEGd1FXvO', 'ROLE_Admin'),
 (2, 'Mohácsi', 'Nóra', 'monono_232', 'mohacsi.nora@epa.gov', '$2a$10$exVjZOnYQ3oFdNTFP7qVHOoL8K2XhKpWXY3r8duw8v9pTNxmC0qbm', 'ROLE_Felhasznalo'),
 (3, 'Lukács', 'Lilla', 'lilu50', 'lukacs.lilla@scientificamerican.com', '$2a$10$IF/tzzbcr229WCuNhT1gE.0CAZ.9itAaz4F0Zm7Y27ShRBRA/pEGq', 'ROLE_Felhasznalo'),
 (4, 'Gulyás', 'Szilvia', 'gulyas_szilvi', 'gulyas.szilvia@stanford.edu', '$2a$10$T1TbzOkW41ihE.35/.seP.xzeG4lNODrF9m80Gbn0D3aG3CbagELC', 'ROLE_Felhasznalo'),
@@ -63,8 +62,8 @@ INSERT INTO `felhasznalok` (`id`, `csaladi_nev`, `utonev`, `bejelentkezes`, `ema
 CREATE TABLE `korlatozas` (
   `az` int(11) UNSIGNED NOT NULL,
   `utszam` int(11) NOT NULL,
-  `kezdet` int(11) NOT NULL,
-  `veg` int(11) NOT NULL,
+  `kezdet` double DEFAULT NULL,
+  `veg` double DEFAULT NULL,
   `telepules` varchar(50) NOT NULL,
   `mettol` date NOT NULL,
   `meddig` date NOT NULL,
@@ -231,7 +230,7 @@ INSERT INTO `megnevezes` (`id`, `nev`) VALUES
 (1, 'kábel fektetés'),
 (2, 'csomópont építés'),
 (3, 'kátyúzás'),
-(4, 'útépítés'),
+(4, 'útjavítás'),
 (5, 'aszfaltmarás'),
 (6, 'árvíz'),
 (7, 'aszfaltozás'),
@@ -262,6 +261,30 @@ INSERT INTO `mertek` (`id`, `nev`) VALUES
 (4, 'teljes lezárás'),
 (5, 'nincs lezárás'),
 (6, 'nehezen járható');
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `uzenetek`
+--
+
+CREATE TABLE `uzenetek` (
+  `id` int(11) NOT NULL,
+  `datum` datetime(6) DEFAULT NULL,
+  `nev` varchar(255) DEFAULT NULL,
+  `szoveg` varchar(200) NOT NULL,
+  `targy` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- A tábla adatainak kiíratása `uzenetek`
+--
+
+INSERT INTO `uzenetek` (`id`, `datum`, `nev`, `szoveg`, `targy`) VALUES
+(1, '2023-11-28 20:35:02.000000', 'majami78', 'Már megint nem lehet időben hazaérni! Újabb felújítás az M2-n Vácnál. Jó hogy rátaláltam erre az oldalra itt legalább előre meg tudom nézni, hogyha korlátozás van felénk.', 'M2 már megint'),
+(2, '2023-11-29 12:43:03.000000', 'Vendég', 'Ebben a nagy ködben nem lehet látni azt az apró kirakott táblát és szalagot amivel lezártátok a belső sávot! Tegyetek ki valami jobb, nagyobb jelzést, mert ennek baleset lesz a vége!', 'M1 Bicske'),
+(3, '2023-11-29 10:15:02.000000', 'monono_232', 'A szlovének milyen kis sunyik! Ha rajtuk keresztül mész síelni egy klasszikus turnusra, akkor már a 7 napos matrica nem elég, meg kell venni a havit!', 'Szlovén határ'),
+(4, '2023-11-30 19:16:04.000000', 'Vendég', 'Az M7 Siófok cewntrumátnál kifelé le van zárva. Mindenki belefut, óriási a dugó. Ezt miért nem közölték a médiában?', 'Siófok M7');
 
 --
 -- Indexek a kiírt táblákhoz
@@ -295,6 +318,12 @@ ALTER TABLE `mertek`
   ADD PRIMARY KEY (`id`);
 
 --
+-- A tábla indexei `uzenetek`
+--
+ALTER TABLE `uzenetek`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- A kiírt táblák AUTO_INCREMENT értéke
 --
 
@@ -302,7 +331,7 @@ ALTER TABLE `mertek`
 -- AUTO_INCREMENT a táblához `felhasznalok`
 --
 ALTER TABLE `felhasznalok`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT a táblához `korlatozas`
@@ -321,6 +350,12 @@ ALTER TABLE `megnevezes`
 --
 ALTER TABLE `mertek`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT a táblához `uzenetek`
+--
+ALTER TABLE `uzenetek`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Megkötések a kiírt táblákhoz

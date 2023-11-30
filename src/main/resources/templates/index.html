@@ -10,10 +10,18 @@
 <body>
 <div th:replace="~{fragments/navigation :: navigation}"></div>
 
-<main role="main" >
-    <div class="container md-5" style="display: contents">
-        <div class="jumbotron" style="margin-bottom: unset">
-            <h1 class="display-4">Üdvözlünk honlapunkon!</h1>
+<main role="main" class="container my-5 pb-5">
+    <div class="row" style="display: contents">
+        <div class="col jumbotron pb-1" style="margin-bottom: unset">
+            <h3 class="display-4 text-center">Üdvözlünk honlapunkon!</h3>
+        </div>
+    </div>
+    <div class="row container md-5" style="display: contents">
+        <div class="col jumbotron" style="margin-bottom: unset">
+            <p class="text-center">Oldalunkon megtalálja az éppen hatájban lévő forgalomkorlátozásokat, az ország egész területére vonatkozóan.</p>
+            <p class="pb-5 text-center">Adatainkat elérheti REST API klienssel is. Szolgáltatásaink körét folyamatosan bővítjük!</p>
+            <p class="display-6 text-center">Jó böngészést kívánunk!</p><br>
+            <p class="display-6 text-center"><img th:src="@{/images/kezdokep.jpg}" alt=""></p>
         </div>
     </div>
 </main>

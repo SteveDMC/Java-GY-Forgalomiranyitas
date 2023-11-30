@@ -9,14 +9,14 @@
 <body>
 <div th:replace="~{fragments/navigation :: navigation}"></div>
 
-<main role="main" class="container my-5">
-    <div class="row">
-        <div class="col">
+<main role="main" class="container my-5 pb-5">
+    <div class="row" style="display: contents">
+        <div class="col jumbotron pb-1 pt-4" style="margin-bottom: unset">
             <h1>Üzenetküldés</h1>
         </div>
     </div>
-    <div class="row">
-        <div class="col">
+    <div class="row" style="display: contents">
+        <div class="col jumbotron pt-5" style="margin-bottom: unset">
             <form action="#" th:action="@{/uzenetkuldes}" th:object="${uzenet}" method="post" novalidate>
                 <div class="form-group">
                     <label for="targy">Üzenet tárgya</label>

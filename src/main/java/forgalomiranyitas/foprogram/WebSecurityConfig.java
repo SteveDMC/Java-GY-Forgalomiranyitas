@@ -30,7 +30,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth.requestMatchers(
-                    "/resources/**","/","/regisztral","/regisztral_feldolgoz",
+                    "/resources/**","/","/images/**","/home","/regisztral","/regisztral_feldolgoz",
                     "/jelszoteszt", "/korlatozasok", "/uzenetkuldes", "/uzenet-bekuldve",
                     "/api/**"
                 ).permitAll()
